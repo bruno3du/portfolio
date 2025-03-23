@@ -13,7 +13,7 @@ export default function Contact() {
         <div className="grid md:grid-cols-2 gap-12 items-center">
           <div className="animate-slide-in-left opacity-0" style={{animationPlayState: 'paused'}}>
             <h2 className="text-4xl font-bold mb-4">
-              <span className="gradient-text">Let's Connect</span>
+              <span className="gradient-text">Let&apos;s Connect</span>
             </h2>
             <div className="w-20 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mb-8"></div>
             

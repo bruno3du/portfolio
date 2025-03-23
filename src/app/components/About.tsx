@@ -22,7 +22,7 @@ export default function About() {
               <div className="relative p-8 glass rounded-2xl hover-lift">
                 <h3 className="text-2xl font-semibold mb-6">My Journey</h3>
                 <p className="text-lg mb-6 text-foreground/80">
-                  I'm a passionate fullstack developer with expertise in building modern web applications. 
+                  I&apos;m a passionate fullstack developer with expertise in building modern web applications. 
                   With a strong foundation in JavaScript and TypeScript, I create robust and scalable solutions.
                 </p>
                 <p className="text-lg text-foreground/80">

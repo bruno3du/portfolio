@@ -12,7 +12,7 @@ export default function Hero() {
       
       <div className="max-w-4xl mx-auto text-center z-10">
         <h1 className="animate-fade-in text-5xl md:text-7xl font-bold mb-6">
-          Hi, I'm <span className="gradient-text">{personalInfo.name}</span>
+          Hi, I&apos;m <span className="gradient-text">{personalInfo.name}</span>
         </h1>
         <h2 className="animate-slide-up delay-200 text-2xl md:text-4xl font-light mb-8">
           {personalInfo.title}
