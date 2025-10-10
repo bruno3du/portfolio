@@ -76,10 +76,12 @@ export default function WehelpWidget({
     <>
       <div id="root-wehelp"></div>
       <Script
+        id="wehelp-script-load"
         type="text/javascript"
         src="https://cdn.wehelpsoftware.com/survey-site/load.js"
       ></Script>
       <Script
+        id="wehelp-script"
         type="text/javascript"
         dangerouslySetInnerHTML={{
           __html: `
