@@ -1,3 +1,5 @@
+"use client";
+
 import Script from "next/script";
 
 interface WehelpWidgetProps {
@@ -16,7 +18,7 @@ interface WehelpWidgetProps {
   gender: string;
   document: string;
   companyUnit: string;
-  customFields: { name: string; value: string }[];
+  customFields?: { name: string; value: string }[];
   debug: number;
 }
 
@@ -39,7 +41,7 @@ export default function WehelpWidget({
   customFields,
   debug = 0,
 }: WehelpWidgetProps) {
-  const customFieldsArray = customFields.map((field) => {
+  const customFieldsArray = customFields?.map((field) => {
     return {
       name: field.name,
       value: field.value,
