@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { getPayload } from "payload";
-import config from "@payload-config";
-import WehelpWidget from "./components/wehelp-widget";
 import { personalInfo, siteConfig } from "./data";
 import "./globals.css";
 
@@ -26,35 +23,12 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const payload = await getPayload({ config });
-  const wehelpConfig = await payload.findGlobal({ slug: "wehelp-config" });
-
   return (
-    <html lang="en" className="scroll-smooth">
+    <html suppressHydrationWarning lang="en" className="scroll-smooth">
       <body
+        suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {wehelpConfig.surveyToken && (
-          <WehelpWidget
-            surveyToken={wehelpConfig.surveyToken}
-            type={wehelpConfig.type ?? "box"}
-            messageOpen={wehelpConfig.messageOpen ?? 0}
-            language={wehelpConfig.language ?? "PORTUGUESE"}
-            experienceId={wehelpConfig.experienceId ?? null}
-            internalCode={wehelpConfig.internalCode ?? ""}
-            name={wehelpConfig.name ?? ""}
-            email={wehelpConfig.email ?? ""}
-            phone={wehelpConfig.phone ?? ""}
-            dateOfBirth={wehelpConfig.dateOfBirth ?? ""}
-            state={wehelpConfig.state ?? ""}
-            country={wehelpConfig.country ?? ""}
-            gender={wehelpConfig.gender ?? ""}
-            document={wehelpConfig.document ?? ""}
-            companyUnit={wehelpConfig.companyUnit ?? ""}
-            debug={wehelpConfig.debug ?? 0}
-            customFields={wehelpConfig.customFields ?? []}
-          />
-        )}
         <header className="fixed top-0 left-0 right-0 bg-background/80 backdrop-blur-md z-50 shadow-sm">
           <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
             <a href="#" className="text-xl font-bold">
