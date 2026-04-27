@@ -5,8 +5,14 @@ import { buildConfig } from "payload";
 import sharp from "sharp";
 import { fileURLToPath } from "url";
 
+import { Experiences } from "./collections/Experiences";
 import { Media } from "./collections/Media";
+import { Posts } from "./collections/Posts";
+import { Projects } from "./collections/Projects";
+import { Socials } from "./collections/Socials";
+import { Tools } from "./collections/Tools";
 import { Users } from "./collections/Users";
+import { LandingPage } from "./globals/LandingPage";
 import { WehelpConfig } from "./globals/WehelpConfig";
 
 const filename = fileURLToPath(import.meta.url);
@@ -19,8 +25,8 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media],
-  globals: [WehelpConfig],
+  collections: [Users, Media, Tools, Projects, Experiences, Socials, Posts],
+  globals: [LandingPage, WehelpConfig],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "",
   typescript: {
@@ -31,4 +37,12 @@ export default buildConfig({
   }),
   sharp,
   plugins: [],
+  localization: {
+    locales: [
+      { code: "pt", label: "Português" },
+      { code: "en", label: "English" },
+    ],
+    defaultLocale: "pt",
+    fallback: true,
+  },
 });

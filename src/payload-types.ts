@@ -69,6 +69,11 @@ export interface Config {
   collections: {
     users: User;
     media: Media;
+    tools: Tool;
+    projects: Project;
+    experiences: Experience;
+    socials: Social;
+    posts: Post;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -78,6 +83,11 @@ export interface Config {
   collectionsSelect: {
     users: UsersSelect<false> | UsersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    tools: ToolsSelect<false> | ToolsSelect<true>;
+    projects: ProjectsSelect<false> | ProjectsSelect<true>;
+    experiences: ExperiencesSelect<false> | ExperiencesSelect<true>;
+    socials: SocialsSelect<false> | SocialsSelect<true>;
+    posts: PostsSelect<false> | PostsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -86,14 +96,16 @@ export interface Config {
   db: {
     defaultIDType: string;
   };
-  fallbackLocale: null;
+  fallbackLocale: ('false' | 'none' | 'null') | false | null | ('pt' | 'en') | ('pt' | 'en')[];
   globals: {
+    'landing-page': LandingPage;
     'wehelp-config': WehelpConfig;
   };
   globalsSelect: {
+    'landing-page': LandingPageSelect<false> | LandingPageSelect<true>;
     'wehelp-config': WehelpConfigSelect<false> | WehelpConfigSelect<true>;
   };
-  locale: null;
+  locale: 'pt' | 'en';
   widgets: {
     collections: CollectionsWidget;
   };
@@ -167,6 +179,124 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tools".
+ */
+export interface Tool {
+  id: string;
+  name: string;
+  category: 'frontend' | 'backend' | 'data' | 'infra';
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects".
+ */
+export interface Project {
+  id: string;
+  /**
+   * Display number, e.g. "01"
+   */
+  n: string;
+  title: string;
+  description: string;
+  tags?:
+    | {
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
+  year: string;
+  link?: string | null;
+  repo?: string | null;
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "experiences".
+ */
+export interface Experience {
+  id: string;
+  /**
+   * e.g. "2025—" or "2022—2023"
+   */
+  year: string;
+  role: string;
+  company: string;
+  description: string;
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "socials".
+ */
+export interface Social {
+  id: string;
+  /**
+   * Display label, e.g. GITHUB, LINKEDIN
+   */
+  platform: string;
+  handle: string;
+  url?: string | null;
+  order?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts".
+ */
+export interface Post {
+  id: string;
+  slug: string;
+  title: string;
+  subtitle?: string | null;
+  excerpt?: string | null;
+  date: string;
+  /**
+   * Minutes
+   */
+  readingTime: number;
+  tags?:
+    | {
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Drop-cap opening paragraph
+   */
+  intro?: string | null;
+  body?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Pull quote shown after the body
+   */
+  outro?: string | null;
+  published?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -196,6 +326,26 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: string | Media;
+      } | null)
+    | ({
+        relationTo: 'tools';
+        value: string | Tool;
+      } | null)
+    | ({
+        relationTo: 'projects';
+        value: string | Project;
+      } | null)
+    | ({
+        relationTo: 'experiences';
+        value: string | Experience;
+      } | null)
+    | ({
+        relationTo: 'socials';
+        value: string | Social;
+      } | null)
+    | ({
+        relationTo: 'posts';
+        value: string | Post;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -281,6 +431,87 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tools_select".
+ */
+export interface ToolsSelect<T extends boolean = true> {
+  name?: T;
+  category?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects_select".
+ */
+export interface ProjectsSelect<T extends boolean = true> {
+  n?: T;
+  title?: T;
+  description?: T;
+  tags?:
+    | T
+    | {
+        value?: T;
+        id?: T;
+      };
+  year?: T;
+  link?: T;
+  repo?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "experiences_select".
+ */
+export interface ExperiencesSelect<T extends boolean = true> {
+  year?: T;
+  role?: T;
+  company?: T;
+  description?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "socials_select".
+ */
+export interface SocialsSelect<T extends boolean = true> {
+  platform?: T;
+  handle?: T;
+  url?: T;
+  order?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "posts_select".
+ */
+export interface PostsSelect<T extends boolean = true> {
+  slug?: T;
+  title?: T;
+  subtitle?: T;
+  excerpt?: T;
+  date?: T;
+  readingTime?: T;
+  tags?:
+    | T
+    | {
+        value?: T;
+        id?: T;
+      };
+  intro?: T;
+  body?: T;
+  outro?: T;
+  published?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv_select".
  */
 export interface PayloadKvSelect<T extends boolean = true> {
@@ -321,31 +552,125 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "collections_widget".
+ * via the `definition` "landing-page".
  */
-export interface CollectionsWidget {
-  data?: {
-    [k: string]: unknown;
+export interface LandingPage {
+  id: string;
+  meta: {
+    name: string;
+    role?: string | null;
+    email: string;
+    mastheadEdition?: string | null;
   };
-  width: 'full';
+  nav?: {
+    work?: string | null;
+    about?: string | null;
+    blog?: string | null;
+    contact?: string | null;
+  };
+  hero?: {
+    kicker?: string | null;
+    headlineLine1?: string | null;
+    /**
+     * Rendered italic + accent color
+     */
+    headlineLine2?: string | null;
+    headlineLine3?: string | null;
+    sub?: string | null;
+    ctaPrimary?: string | null;
+    ctaSecondary?: string | null;
+  };
+  about?: {
+    label?: string | null;
+    title?: string | null;
+    body?: string | null;
+    facts?:
+      | {
+          value: string;
+          label: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  skills?: {
+    label?: string | null;
+    title?: string | null;
+    /**
+     * Display labels for each tool category
+     */
+    categoryLabels?: {
+      frontend?: string | null;
+      backend?: string | null;
+      data?: string | null;
+      infra?: string | null;
+    };
+  };
+  work?: {
+    label?: string | null;
+    title?: string | null;
+    sub?: string | null;
+  };
+  timeline?: {
+    label?: string | null;
+    title?: string | null;
+  };
+  github?: {
+    label?: string | null;
+    title?: string | null;
+    stats?:
+      | {
+          value: string;
+          label: string;
+          id?: string | null;
+        }[]
+      | null;
+    reposTitle?: string | null;
+    repos?:
+      | {
+          name: string;
+          description: string;
+          stars: string;
+          lang: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  blog?: {
+    label?: string | null;
+    title?: string | null;
+    sub?: string | null;
+    readMore?: string | null;
+    readingTime?: string | null;
+    backToList?: string | null;
+    backHome?: string | null;
+    filterLabel?: string | null;
+    indexHeadlinePre?: string | null;
+    indexHeadlinePost?: string | null;
+    morePosts?: string | null;
+    emptyState?: string | null;
+    authorBio?: string | null;
+    authorCta?: string | null;
+  };
+  contact?: {
+    label?: string | null;
+    title?: string | null;
+    sub?: string | null;
+  };
+  footer?: {
+    copy?: string | null;
+    built?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
 }
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "auth".
- */
-export interface Auth {
-  [k: string]: unknown;
-}
-
-
 /**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "wehelp-config".
  */
 export interface WehelpConfig {
   id: string;
-  surveyToken?: string | null;
-  type?: ('box' | 'button') | null;
+  surveyToken: string;
+  type: 'box' | 'button';
   messageOpen?: number | null;
   language?: string | null;
   experienceId?: string | null;
@@ -370,6 +695,141 @@ export interface WehelpConfig {
   updatedAt?: string | null;
   createdAt?: string | null;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "landing-page_select".
+ */
+export interface LandingPageSelect<T extends boolean = true> {
+  meta?:
+    | T
+    | {
+        name?: T;
+        role?: T;
+        email?: T;
+        mastheadEdition?: T;
+      };
+  nav?:
+    | T
+    | {
+        work?: T;
+        about?: T;
+        blog?: T;
+        contact?: T;
+      };
+  hero?:
+    | T
+    | {
+        kicker?: T;
+        headlineLine1?: T;
+        headlineLine2?: T;
+        headlineLine3?: T;
+        sub?: T;
+        ctaPrimary?: T;
+        ctaSecondary?: T;
+      };
+  about?:
+    | T
+    | {
+        label?: T;
+        title?: T;
+        body?: T;
+        facts?:
+          | T
+          | {
+              value?: T;
+              label?: T;
+              id?: T;
+            };
+      };
+  skills?:
+    | T
+    | {
+        label?: T;
+        title?: T;
+        categoryLabels?:
+          | T
+          | {
+              frontend?: T;
+              backend?: T;
+              data?: T;
+              infra?: T;
+            };
+      };
+  work?:
+    | T
+    | {
+        label?: T;
+        title?: T;
+        sub?: T;
+      };
+  timeline?:
+    | T
+    | {
+        label?: T;
+        title?: T;
+      };
+  github?:
+    | T
+    | {
+        label?: T;
+        title?: T;
+        stats?:
+          | T
+          | {
+              value?: T;
+              label?: T;
+              id?: T;
+            };
+        reposTitle?: T;
+        repos?:
+          | T
+          | {
+              name?: T;
+              description?: T;
+              stars?: T;
+              lang?: T;
+              id?: T;
+            };
+      };
+  blog?:
+    | T
+    | {
+        label?: T;
+        title?: T;
+        sub?: T;
+        readMore?: T;
+        readingTime?: T;
+        backToList?: T;
+        backHome?: T;
+        filterLabel?: T;
+        indexHeadlinePre?: T;
+        indexHeadlinePost?: T;
+        morePosts?: T;
+        emptyState?: T;
+        authorBio?: T;
+        authorCta?: T;
+      };
+  contact?:
+    | T
+    | {
+        label?: T;
+        title?: T;
+        sub?: T;
+      };
+  footer?:
+    | T
+    | {
+        copy?: T;
+        built?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "wehelp-config_select".
+ */
 export interface WehelpConfigSelect<T extends boolean = true> {
   surveyToken?: T;
   type?: T;
@@ -396,7 +856,26 @@ export interface WehelpConfigSelect<T extends boolean = true> {
       };
   updatedAt?: T;
   createdAt?: T;
+  globalType?: T;
 }
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "collections_widget".
+ */
+export interface CollectionsWidget {
+  data?: {
+    [k: string]: unknown;
+  };
+  width: 'full';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "auth".
+ */
+export interface Auth {
+  [k: string]: unknown;
+}
+
 
 declare module 'payload' {
   export interface GeneratedTypes extends Config {}

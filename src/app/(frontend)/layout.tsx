@@ -1,79 +1,51 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
-import { personalInfo, siteConfig } from "./data";
+import { Archivo_Black, Instrument_Serif, JetBrains_Mono, Newsreader } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const instrumentSerif = Instrument_Serif({
+  variable: "--font-instrument-serif",
   subsets: ["latin"],
+  weight: "400",
+  style: ["normal", "italic"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const newsreader = Newsreader({
+  variable: "--font-newsreader",
   subsets: ["latin"],
+  weight: ["400", "500"],
+  style: ["normal", "italic"],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
+  subsets: ["latin"],
+  weight: ["400", "500", "700", "800"],
+});
+
+const archivoBlack = Archivo_Black({
+  variable: "--font-archivo-black",
+  subsets: ["latin"],
+  weight: "400",
 });
 
 export const metadata: Metadata = {
-  title: siteConfig.title,
-  description: siteConfig.description,
+  title: "Bruno Eduardo — Fullstack Developer",
+  description:
+    "4+ anos transformando café em SaaS. TypeScript, React, Node, Postgres.",
 };
 
-export default async function RootLayout({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html suppressHydrationWarning lang="en" className="scroll-smooth">
-      <body
-        suppressHydrationWarning
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <header className="fixed top-0 left-0 right-0 bg-background/80 backdrop-blur-md z-50 shadow-sm">
-          <div className="max-w-6xl mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="#" className="text-xl font-bold">
-              {personalInfo.name}
-            </a>
-            <nav>
-              <ul className="flex space-x-8">
-                <li>
-                  <a
-                    href="#about"
-                    className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                  >
-                    About
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#projects"
-                    className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                  >
-                    Projects
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#experience"
-                    className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                  >
-                    Experience
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#contact"
-                    className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-                  >
-                    Contact
-                  </a>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </header>
-        {children}
-      </body>
+    <html
+      suppressHydrationWarning
+      lang="pt-BR"
+      className={`${instrumentSerif.variable} ${newsreader.variable} ${jetbrainsMono.variable} ${archivoBlack.variable}`}
+    >
+      <body suppressHydrationWarning>{children}</body>
     </html>
   );
 }
